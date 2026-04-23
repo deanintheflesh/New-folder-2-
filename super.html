@@ -1,0 +1,655 @@
+Line wrap
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Supernatural — The Hidden World</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+--blood: #8b0000;
+--gold: #c9a84c;
+--ash: #1a1a1a;
+--smoke: #2d2d2d;
+--bone: #e8dcc8;
+--glow: #ff6b35;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background-color: #0a0a0a;
+color: var(--bone);
+font-family: 'EB Garamond', serif;
+overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 9999;
+opacity: 0.4;
+}
+
+/* ── HERO ── */
+.hero {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+position: relative;
+background:
+radial-gradient(ellipse at 50% 0%, rgba(139,0,0,0.35) 0%, transparent 65%),
+radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 50%),
+#0a0a0a;
+overflow: hidden;
+padding: 2rem;
+text-align: center;
+}
+
+/* Pentagram background */
+.hero::after {
+content: '⛧';
+position: absolute;
+font-size: 55vw;
+opacity: 0.025;
+color: var(--blood);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+pointer-events: none;
+animation: slowSpin 60s linear infinite;
+}
+
+@keyframes slowSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+.hero-eyebrow {
+font-family: 'Cinzel', serif;
+font-size: clamp(0.65rem, 2vw, 0.85rem);
+letter-spacing: 0.4em;
+color: var(--gold);
+text-transform: uppercase;
+margin-bottom: 1.5rem;
+opacity: 0;
+animation: fadeUp 1s ease forwards 0.3s;
+}
+
+.hero-title {
+font-family: 'Cinzel Decorative', cursive;
+font-size: clamp(2.8rem, 10vw, 7rem);
+font-weight: 900;
+line-height: 1;
+letter-spacing: 0.05em;
+color: #fff;
+text-shadow:
+0 0 30px rgba(139,0,0,0.9),
+0 0 80px rgba(139,0,0,0.5),
+0 0 140px rgba(139,0,0,0.2);
+opacity: 0;
+animation: fadeUp 1s ease forwards 0.6s;
+position: relative;
+z-index: 1;
+}
+
+.hero-subtitle {
+font-family: 'Cinzel', serif;
+font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+letter-spacing: 0.3em;
+color: var(--gold);
+margin-top: 1rem;
+opacity: 0;
+animation: fadeUp 1s ease forwards 0.9s;
+}
+
+.hero-desc {
+max-width: 550px;
+margin: 2rem auto 0;
+font-size: clamp(0.9rem, 2.5vw, 1rem);
+color: #aaa;
+line-height: 1.8;
+opacity: 0;
+animation: fadeUp 1s ease forwards 1.2s;
+}
+
+.hero-divider {
+width: 120px;
+height: 2px;
+background: linear-gradient(90deg, transparent, var(--gold), transparent);
+margin: 2rem auto;
+opacity: 0;
+animation: fadeUp 1s ease forwards 1.4s;
+}
+
+.hero-badges {
+display: flex;
+gap: 1rem;
+justify-content: center;
+flex-wrap: wrap;
+opacity: 0;
+animation: fadeUp 1s ease forwards 1.6s;
+}
+
+.badge {
+border: 1px solid rgba(201,168,76,0.4);
+padding: 0.4rem 1rem;
+font-size: 0.75rem;
+letter-spacing: 0.15em;
+color: var(--gold);
+font-family: 'Cinzel', serif;
+border-radius: 2px;
+background: rgba(201,168,76,0.05);
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION ── */
+section {
+padding: 5rem 1.5rem;
+max-width: 1100px;
+margin: 0 auto;
+}
+
+.section-label {
+font-family: 'Cinzel', serif;
+font-size: 0.7rem;
+letter-spacing: 0.45em;
+color: var(--blood);
+text-transform: uppercase;
+margin-bottom: 0.75rem;
+}
+
+.section-title {
+font-family: 'Cinzel Decorative', cursive;
+font-size: clamp(1.6rem, 4vw, 2.4rem);
+color: #fff;
+margin-bottom: 3rem;
+position: relative;
+display: inline-block;
+}
+
+.section-title::after {
+content: '';
+display: block;
+width: 60%;
+height: 2px;
+background: linear-gradient(90deg, var(--blood), transparent);
+margin-top: 0.6rem;
+}
+
+/* ── CHARACTERS ── */
+.chars-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+gap: 1.5rem;
+}
+
+.char-card {
+background: linear-gradient(145deg, #161616, #0f0f0f);
+border: 1px solid #2a2a2a;
+border-radius: 4px;
+overflow: hidden;
+position: relative;
+transition: transform 0.35s ease, border-color 0.35s ease;
+cursor: default;
+}
+
+.char-card:hover {
+transform: translateY(-6px);
+border-color: var(--blood);
+}
+
+.char-card:hover .char-glow {
+opacity: 1;
+}
+
+.char-glow {
+position: absolute;
+inset: 0;
+background: radial-gradient(ellipse at 50% 0%, rgba(139,0,0,0.18), transparent 70%);
+opacity: 0;
+transition: opacity 0.35s ease;
+pointer-events: none;
+}
+
+.char-icon {
+width: 100%;
+height: 160px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 5rem;
+background: #111;
+border-bottom: 1px solid #1f1f1f;
+position: relative;
+overflow: hidden;
+}
+
+.char-icon::before {
+content: '';
+position: absolute;
+inset: 0;
+background: radial-gradient(ellipse at 50% 100%, rgba(139,0,0,0.3), transparent 60%);
+}
+
+.char-body { padding: 1.4rem; }
+
+.char-name {
+font-family: 'Cinzel', serif;
+font-size: 1.05rem;
+font-weight: 600;
+color: #fff;
+margin-bottom: 0.3rem;
+}
+
+.char-role {
+font-size: 0.72rem;
+letter-spacing: 0.2em;
+color: var(--gold);
+text-transform: uppercase;
+margin-bottom: 0.9rem;
+}
+
+.char-desc {
+font-size: 0.85rem;
+color: #888;
+line-height: 1.7;
+}
+
+/* ── SEASONS ── */
+.seasons-list {
+display: flex;
+flex-direction: column;
+gap: 1rem;
+}
+
+.season-row {
+display: flex;
+align-items: center;
+gap: 1.5rem;
+padding: 1.2rem 1.5rem;
+background: #111;
+border: 1px solid #222;
+border-radius: 3px;
+transition: border-color 0.3s;
+position: relative;
+overflow: hidden;
+}
+
+.season-row:hover { border-color: var(--blood); }
+
+.season-num {
+font-family: 'Cinzel Decorative', cursive;
+font-size: 1.8rem;
+font-weight: 900;
+color: var(--blood);
+min-width: 3rem;
+line-height: 1;
+}
+
+.season-info { flex: 1; }
+
+.season-title {
+font-family: 'Cinzel', serif;
+font-size: 0.95rem;
+color: #fff;
+margin-bottom: 0.3rem;
+}
+
+.season-desc {
+font-size: 0.82rem;
+color: #777;
+line-height: 1.6;
+}
+
+.season-eps {
+font-size: 0.7rem;
+color: var(--gold);
+letter-spacing: 0.15em;
+font-family: 'Cinzel', serif;
+white-space: nowrap;
+}
+
+/* ── QUOTES ── */
+.quotes-section {
+background:
+linear-gradient(to bottom, transparent, rgba(139,0,0,0.06), transparent),
+#0c0c0c;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+padding: 5rem 1.5rem;
+}
+
+.quotes-inner {
+max-width: 800px;
+margin: 0 auto;
+}
+
+.quote-block {
+text-align: center;
+padding: 2.5rem 0;
+border-bottom: 1px solid #1a1a1a;
+}
+
+.quote-block:last-child { border-bottom: none; }
+
+.quote-text {
+font-family: 'Cinzel', serif;
+font-size: clamp(1rem, 2.5vw, 1.25rem);
+color: #ddd;
+line-height: 1.8;
+font-style: italic;
+margin-bottom: 1rem;
+}
+
+.quote-mark {
+color: var(--blood);
+font-size: 1.5em;
+line-height: 0;
+vertical-align: -0.2em;
+}
+
+.quote-author {
+font-size: 0.75rem;
+letter-spacing: 0.3em;
+color: var(--gold);
+font-family: 'Cinzel', serif;
+text-transform: uppercase;
+}
+
+/* ── CREATURES ── */
+.creatures-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 1rem;
+}
+
+.creature-card {
+padding: 1.5rem 1.2rem;
+background: #0f0f0f;
+border: 1px solid #1e1e1e;
+border-radius: 3px;
+text-align: center;
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+.creature-card::before {
+content: '';
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, var(--blood), transparent);
+transform: scaleX(0);
+transition: transform 0.35s ease;
+}
+
+.creature-card:hover::before { transform: scaleX(1); }
+.creature-card:hover { border-color: #2a2a2a; background: #131313; }
+
+.creature-emoji { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+
+.creature-name {
+font-family: 'Cinzel', serif;
+font-size: 0.85rem;
+color: #ddd;
+margin-bottom: 0.4rem;
+}
+
+.creature-desc {
+font-size: 0.75rem;
+color: #666;
+line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+border-top: 1px solid #1a1a1a;
+padding: 3rem 1.5rem;
+text-align: center;
+}
+
+.footer-symbol {
+font-size: 2rem;
+margin-bottom: 1rem;
+display: block;
+color: var(--blood);
+opacity: 0.6;
+}
+
+.footer-text {
+font-family: 'Cinzel', serif;
+font-size: 0.75rem;
+letter-spacing: 0.25em;
+color: #444;
+}
+
+.footer-text span { color: var(--gold); }
+
+/* ── SCROLL LINE ── */
+.divider-rune {
+text-align: center;
+color: var(--blood);
+font-size: 1.2rem;
+opacity: 0.5;
+letter-spacing: 1em;
+padding: 1rem 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+.season-row { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+.season-eps { align-self: flex-end; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+<p class="hero-eyebrow">Season One — Fifteen · 2005 – 2020</p>
+<h1 class="hero-title">SUPERNATURAL</h1>
+<p class="hero-subtitle">Saving People · Hunting Things · The Family Business</p>
+<div class="hero-divider"></div>
+<p class="hero-desc">
+Two brothers hunt the dark highways of America searching for their missing father,
+only to find themselves at the center of a cosmic war between angels and demons.
+</p>
+<div style="height:1.5rem"></div>
+<div class="hero-badges">
+<span class="badge">15 Seasons</span>
+<span class="badge">327 Episodes</span>
+<span class="badge">The CW Network</span>
+<span class="badge">2005 – 2020</span>
+</div>
+</header>
+
+<!-- CHARACTERS -->
+<section>
+<p class="section-label">The Heroes</p>
+<h2 class="section-title">Main Characters</h2>
+<div class="chars-grid">
+
+<div class="char-card">
+<div class="char-glow"></div>
+<div class="char-icon">🤠</div>
+<div class="char-body">
+<p class="char-name">Dean Winchester</p>
+<p class="char-role">The Elder Hunter</p>
+<p class="char-desc">The practical and fearless older brother. Wields the legendary Colt and drives his beloved 1967 Impala. His heart always belongs to family.</p>
+</div>
+</div>
+
+<div class="char-card">
+<div class="char-glow"></div>
+<div class="char-icon">📚</div>
+<div class="char-body">
+<p class="char-name">Sam Winchester</p>
+<p class="char-role">The Intellectual</p>
+<p class="char-desc">The smart and studious younger brother. Studied law before returning to hunting. Possesses mysterious psychic abilities tied to a dark destiny.</p>
+</div>
+</div>
+
+<div class="char-card">
+<div class="char-glow"></div>
+<div class="char-icon">😇</div>
+<div class="char-body">
+<p class="char-name">Castiel</p>
+<p class="char-role">Angel of the Lord</p>
+<p class="char-desc">A heavenly angel who pulls Dean from Hell and becomes an indispensable ally. His devotion to the brothers often puts him at odds with Heaven itself.</p>
+</div>
+</div>
+
+<div class="char-card">
+<div class="char-glow"></div>
+<div class="char-icon">💀</div>
+<div class="char-body">
+<p class="char-name">Bobby Singer</p>
+<p class="char-role">The Mentor</p>
+<p class="char-desc">A seasoned hunter and master researcher. The brothers' last resort in any crisis — a surrogate father who always answers the phone.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<div class="divider-rune">✦ ✦ ✦</div>
+
+<!-- SEASONS -->
+<section>
+<p class="section-label">The Journey</p>
+<h2 class="section-title">Highlighted Seasons</h2>
+<div class="seasons-list">
+
+<div class="season-row">
+<span class="season-num">01</span>
+<div class="season-info">
+<p class="season-title">The Beginning — Following the Devil's Trail</p>
+<p class="season-desc">The brothers search for their missing father while hunting mysterious creatures across America's back roads.</p>
+</div>
+<span class="season-eps">22 Episodes</span>
+</div>
+
+<div class="season-row">
+<span class="season-num">04</span>
+<div class="season-info">
+<p class="season-title">Angels Fall — The First Seal</p>
+<p class="season-desc">Castiel's debut and the beginning of Heaven's conspiracy. Dean returns from Hell and discovers his true purpose.</p>
+</div>
+<span class="season-eps">22 Episodes</span>
+</div>
+
+<div class="season-row">
+<span class="season-num">05</span>
+<div class="season-info">
+<p class="season-title">End of Days — Apocalypse</p>
+<p class="season-desc">The ultimate battle between good and evil. Lucifer is free and Michael waits. The fate of the world rests in the hands of two brothers.</p>
+</div>
+<span class="season-eps">22 Episodes</span>
+</div>
+
+<div class="season-row">
+<span class="season-num">15</span>
+<div class="season-info">
+<p class="season-title">The Grand Finale — Carry On</p>
+<p class="season-desc">The final season and a deeply emotional conclusion to a 15-year journey. A farewell to the most beloved faces in TV history.</p>
+</div>
+<span class="season-eps">20 Episodes</span>
+</div>
+
+</div>
+</section>
+
+<!-- QUOTES -->
+<div class="quotes-section">
+<div class="quotes-inner">
+<p class="section-label" style="text-align:center;margin-bottom:0.5rem">Unforgettable Words</p>
+<h2 class="section-title" style="display:block;text-align:center">Iconic Quotes</h2>
+
+<div class="quote-block">
+<p class="quote-text">
+<span class="quote-mark">"</span>
+Saving people, hunting things — the family business.
+<span class="quote-mark">"</span>
+</p>
+<p class="quote-author">— Dean Winchester</p>
+</div>
+
+<div class="quote-block">
+<p class="quote-text">
+<span class="quote-mark">"</span>
+I have a different perspective on things. I was human once too.
+<span class="quote-mark">"</span>
+</p>
+<p class="quote-author">— Castiel</p>
+</div>
+
+<div class="quote-block">
+<p class="quote-text">
+<span class="quote-mark">"</span>
+Idjits.
+<span class="quote-mark">"</span>
+</p>
+<p class="quote-author">— Bobby Singer</p>
+</div>
+</div>
+</div>
+
+<!-- CREATURES -->
+<section>
+<p class="section-label">The Monster Manual</p>
+<h2 class="section-title">What Lurks in the Dark</h2>
+<div class="creatures-grid">
+<div class="creature-card">
+<span class="creature-emoji">🧛</span>
+<p class="creature-name">Vampires</p>
+<p class="creature-desc">Organized in secret nests, they feed on human blood and are harder to kill than the legends suggest.</p>
+</div>
+<div class="creature-card">
+<span class="creature-emoji">👻</span>
+<p class="creature-name">Ghosts</p>
+<p class="creature-desc">Souls trapped between worlds, bound by violent deaths or powerful unfinished attachments.</p>
+</div>
+<div class="creature-card">
+<span class="creature-emoji">😈</span>
+<p class="creature-name">Demons</p>
+<p class="creature-desc">Human souls twisted in Hell, capable of possessing the living and serving Lucifer's dark agenda.</p>
+</div>
+<div class="creature-card">
+<span class="creature-emoji">🐺</span>
+<p class="creature-name">Werewolves</p>
+<p class="creature-desc">Cursed by a bite, they transform under the full moon and crave the hearts of the living.</p>
+</div>
+<div class="creature-card">
+<span class="creature-emoji">🐉</span>
+<p class="creature-name">Leviathans</p>
+<p class="creature-desc">Ancient beasts predating creation itself, released from Purgatory in Season Seven.</p>
+</div>
+<div class="creature-card">
+<span class="creature-emoji">👁️</span>
+<p class="creature-name">Angels</p>
+<p class="creature-desc">Heaven's soldiers — powerful, cold, and not always on the right side of the fight.</p>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<span class="footer-symbol">⛧</span>
+<p class="footer-text">
+Web Design Project — Web Programming Course<br>
+<span>Supernatural © 2005–2020 Warner Bros. Television</span>
+</p>
+</footer>
+
+</body>
+</html>
